@@ -86,7 +86,10 @@ public class Book{
     public String getTitle(){
         return title;
     }
-
+    public void getDetails()
+    {
+	System.out.println("Title: "+title+"\nCreator: "+authorFName+" "+authorLName+"\nGenre: "+genre+"\nYear of Release: "+releaseYear+"\nRating: "+rating+"\nPublisher/Studio: "+publisherOrStudio+"\nItem Quality: "+quality+"\nIllustrator: "+illustrator+"\nQuantity: "+quantity+"\nQuality: "+quality+"\nID: "+bookID+"\n");
+    }
     public void setAuthorFName(String authorFName) {
         this.authorFName = authorFName;
     }

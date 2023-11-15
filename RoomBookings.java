@@ -6,12 +6,12 @@ public class RoomBookings{
     private int rmNum;
     private int duration;
     public RoomBookings(int bookingID, int memberID, boolean available, boolean hasPC,int rmNum, int duration){
-        bookingID=this.bookingID;
-        memberID=this.memberID;
-        available=this.available;
-        hasPC=this.hasPC;
-        rmNum=this.rmNum;
-        duration=this.duration;
+        this.bookingID=bookingID;
+        this.memberID=memberID;
+        this.available=available;
+        this.hasPC=hasPC;
+        this.rmNum=rmNum;
+        this.duration=duration;
     }
     public int getBookingID() {
         return bookingID;

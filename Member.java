@@ -53,4 +53,22 @@ public class Member {
     public void setAmtOwed(double amtOwed) {
         this.amtOwed = amtOwed;
     }
+        public void getDetails()
+	{
+		System.out.println("Name: "+name+"\nEmail: "+email+"\nAmount Owed: $"+amtOwed);
+		if(booksout.length > 0)
+		{
+			for(int i = 0; i < booksout.length; i++)
+			{
+				System.out.println("Book "+(i+1)+": "+booksout[i].getTitle());
+			}
+		}
+		if(otherRental.length > 0)
+		{
+			for(int i = 0; i < otherRental.length; i++)
+			{
+				System.out.println("Item "+(i+1)+": "+otherRental[i].getTitle());
+			}
+		}
+	}
 }

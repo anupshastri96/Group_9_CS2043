@@ -40,6 +40,10 @@ public class RoomBookings{
     public int getRmNum() {
         return rmNum;
     }
+    public void getDetails()
+    {
+    	System.out.println("Booking ID: "+bookingID+"\nMember ID: "+memberID+"\nRoom is Available: "+available+"\nHas  Computer: "+hasPC+"\nRoom Number: "+rmNum+"\nTime Duration: "+duration+" Minutes");
+    }
     public void setRmNum(int rmNum) {
         this.rmNum = rmNum;
     }

@@ -1,114 +1,446 @@
+import java.util.HashMap;
+//import com.mysql.jdbc.Statement;
+import java.sql.*;
+/*
+ * setenv CLASSPATH .:/usr/share/java/mysql-connector-java.jar
+ */
 public class NonBook 
 {
-	String itemType;
-	String creator;
-	String genre;
-	int quantity;
-	int quality;
-	String title;
-	float rating;
-	int releaseYear;
-	String pubOrStud;
-	String illust;
-	static int IDTrack = 100;
-	final int NBID;
-	//constructor
-	public NonBook(String iType, String cre, String gen, int quan, int qual, String tit, float rat, int relYr, String pubStud, String ill)
-	{
-		itemType = iType;
-		creator = cre;
-		genre = gen;
-		quantity = quan;
-		quality = qual;
-		title = tit;
-		rating = rat;
-		releaseYear = relYr;
-		pubOrStud = pubStud;
-		illust = ill;
-		NBID = IDTrack;
-		IDTrack++;
-	}
 	//getters
-	public String getType()
+	public static void getRating(int ID)
 	{
-		return itemType;
+		try {
+		String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+		Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+		Statement stmt = connector.createStatement();
+         	ResultSet rs = stmt.executeQuery("SELECT rating from non_books where nonBookID = "+ID);
+         	
+         	System.out.print("Rating: ");
+         while(rs.next())
+         {
+            float rat = rs.getFloat("rating");
+            System.out.println(rat);
+            }
+	        connector.close();
+      		}
+      catch(SQLException e)
+		{
+			System.out.println("Database Error: "+e.getMessage());
+		}
 	}
-	public String getCreator()
+	public static void getType(int ID)
 	{
-		return creator;
+		try {
+		String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+		Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+		Statement stmt = connector.createStatement();
+         	ResultSet rs = stmt.executeQuery("SELECT itemType from non_books where nonBookID = "+ID);
+         	
+         	System.out.print("ItemType: ");
+         while(rs.next())
+         {
+            String IT = rs.getString("itemType");
+            System.out.println(IT);
+            }
+	        connector.close();
+      		}
+      catch(SQLException e)
+		{
+			System.out.println("Database Error: "+e.getMessage());
+		}
 	}
-	public String getGenre()
+	public static void getCreator(int ID)
 	{
-		return genre;
+		try {
+			String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+			Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+			Statement stmt = connector.createStatement();
+		 	ResultSet rs = stmt.executeQuery("SELECT creator from non_books where nonBookID = "+ID);
+		 	
+		 	System.out.print("Creator: ");
+		 while(rs.next())
+		 {
+		    String cre = rs.getString("creator");
+		    System.out.println(cre);
+		    }
+			connector.close();
+	      		}
+	      catch(SQLException e)
+			{
+				System.out.println("Database Error: "+e.getMessage());
+			}
 	}
-	public int getQuant()
+	public static void getGenre(int ID)
 	{
-		return quantity;
+		try {
+		String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+		Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+		Statement stmt = connector.createStatement();
+         	ResultSet rs = stmt.executeQuery("SELECT genre from non_books where nonBookID = "+ID);
+         	
+         	System.out.print("Genre: ");
+         while(rs.next())
+         {
+            String gen = rs.getString("genre");
+            System.out.println(gen);
+            }
+	        connector.close();
+      		}
+      catch(SQLException e)
+		{
+			System.out.println("Database Error: "+e.getMessage());
+		}
 	}
-	public int getQual()
+	public static void getQuant(int ID)
 	{
-		return quality;
+		try {
+		String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+		Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+		Statement stmt = connector.createStatement();
+         	ResultSet rs = stmt.executeQuery("SELECT quantity from non_books where nonBookID = "+ID);
+         	
+         	System.out.print("Quantity: ");
+         while(rs.next())
+         {
+            int quan = rs.getInt("quantity");
+            System.out.println(quan);
+            }
+	        connector.close();
+      		}
+      catch(SQLException e)
+		{
+			System.out.println("Database Error: "+e.getMessage());
+		}
 	}
-	public String getTitle()
+	public static void getQual(int ID)
 	{
-		return title;
+		try {
+		String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+		Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+		Statement stmt = connector.createStatement();
+         	ResultSet rs = stmt.executeQuery("SELECT quality from non_books where nonBookID = "+ID);
+         	
+         	System.out.print("Quality: ");
+         while(rs.next())
+         {
+            String qual = rs.getString("quality");
+            System.out.println(qual);
+            }
+	        connector.close();
+      		}
+      catch(SQLException e)
+		{
+			System.out.println("Database Error: "+e.getMessage());
+		}
 	}
-	public int getRelYr()
+	public static void getTitle(int ID)
 	{
-		return releaseYear;
+		try {
+		String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+		Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+		Statement stmt = connector.createStatement();
+         	ResultSet rs = stmt.executeQuery("SELECT title from non_books where nonBookID = "+ID);
+         	
+         	System.out.print("Title: ");
+         while(rs.next())
+         {
+            String title = rs.getString("title");
+            System.out.println(title);
+            }
+	        connector.close();
+      		}
+      catch(SQLException e)
+		{
+			System.out.println("Database Error: "+e.getMessage());
+		}
 	}
-	public String getPubStud()
+	public static void getRelYr(int ID)
 	{
-		return pubOrStud;
+		try {
+		String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+		Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+		Statement stmt = connector.createStatement();
+         	ResultSet rs = stmt.executeQuery("SELECT releaseYear from non_books where nonBookID = "+ID);
+         	
+         	System.out.print("Release Year: ");
+         while(rs.next())
+         {
+            int relYr = rs.getInt("releaseYear");
+            System.out.println(relYr);
+            }
+	        connector.close();
+      		}
+      catch(SQLException e)
+		{
+			System.out.println("Database Error: "+e.getMessage());
+		}
 	}
-	public String getIll()
+	public static void getPubStud(int ID)
 	{
-		return illust;
+		try {
+		String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+		Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+		Statement stmt = connector.createStatement();
+         	ResultSet rs = stmt.executeQuery("SELECT publisherStudio from non_books where nonBookID = "+ID);
+         	
+         	System.out.print("Publisher/Studio: ");
+         while(rs.next())
+         {
+            String PS = rs.getString("publisherStudio");
+            System.out.println(PS);
+            }
+	        connector.close();
+      		}
+      catch(SQLException e)
+		{
+			System.out.println("Database Error: "+e.getMessage());
+		}
 	}
-	public int getID()
+	public static void getIll(int ID)
 	{
-		return NBID;
+		try {
+		String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+		Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+		Statement stmt = connector.createStatement();
+         	ResultSet rs = stmt.executeQuery("SELECT illustrator from non_books where nonBookID = "+ID);
+         	
+         	System.out.print("Illustrator: ");
+         while(rs.next())
+         {
+            String ill = rs.getString("illustrator");
+            System.out.println(ill);
+            }
+	        connector.close();
+      		}
+      catch(SQLException e)
+		{
+			System.out.println("Database Error: "+e.getMessage());
+		}
 	}
-	public void getDetails()
+	public static void getNonBook(int ID)
 	{
-		System.out.println("Item Type: "+itemType+"\nTitle: "+title+"\nCreator: "+creator+"\nGenre: "+genre+"\nYear of Release: "+releaseYear+"\nRating: "+rating+"\nPublisher/Studio: "+pubOrStud+"\nItem Quality: "+quality+"\nIllustrator: "+illust+"\nQuantity: "+quantity+"\nQuality: "+quality+"\nID: "+NBID+"\n");
+		try {
+		String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+		Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+		Statement stmt = connector.createStatement();
+         	ResultSet rs = stmt.executeQuery("SELECT * from non_books where nonBookID = "+ID);
+         	
+         	System.out.println("ID  Title  ItemType  Creator  Genre  Quantity  Quality  Rating  ReleaseYear  Publisher/Studio  Illustrator");
+         while(rs.next())
+         {
+         	int id = rs.getInt("nonBookID");
+            String title = rs.getString("title");
+            String IT = rs.getString("itemType");
+            String cre = rs.getString("creator");
+            String gen = rs.getString("genre");
+            int quan = rs.getInt("quantity");
+            String qual = rs.getString("quality");
+            float rat = rs.getFloat("rating");
+            int relY = rs.getInt("releaseYear");
+            String pubS = rs.getString("publisherStudio");
+            String ill = rs.getString("illustrator");
+            System.out.println(id+",  "+title+",  "+IT+",  "+cre+",  "+gen+",  "+quan+",  "+qual+",  "+rat+",  "+relY+",  "+pubS+",  "+ill);
+            }
+	        connector.close();
+      		}
+      catch(SQLException e)
+		{
+			System.out.println("Database Error: "+e.getMessage());
+		}
+	}
+	public static void getAll()
+	{
+	try
+		{
+		String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+		Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+		Statement stmt = connector.createStatement();
+         ResultSet rs = stmt.executeQuery("SELECT * FROM non_books");
+         System.out.println("ID  Title  ItemType  Creator  Genre  Quantity  Quality  Rating  ReleaseYear  Publisher/Studio  Illustrator");
+         
+         while (rs.next()) {
+            int id = rs.getInt("nonBookID");
+            String title = rs.getString("title");
+            String IT = rs.getString("itemType");
+            String cre = rs.getString("creator");
+            String gen = rs.getString("genre");
+            int quan = rs.getInt("quantity");
+            String qual = rs.getString("quality");
+            float rat = rs.getFloat("rating");
+            int relY = rs.getInt("releaseYear");
+            String pubS = rs.getString("publisherStudio");
+            String ill = rs.getString("illustrator");
+            System.out.println(id+",  "+title+",  "+IT+",  "+cre+",  "+gen+",  "+quan+",  "+qual+",  "+rat+",  "+relY+",  "+pubS+",  "+ill);
+            	}
+	        connector.close();
+      		}
+      catch(SQLException e)
+		{
+			System.out.println("Database Error: "+e.getMessage());
+		}
 	}
 	//setters
-	public void setType(String newType)
+	public static void setType(String newType, int ID)
 	{
-		itemType = newType;
+		try
+		{
+			String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+			Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+			String query = "update non_books set itemType = ? where nonBookID = ?";
+			PreparedStatement prepSt = connector.prepareStatement(query);
+        		prepSt.setString(1, newType);
+			prepSt.setInt(2, ID);
+			prepSt.executeUpdate();
+			connector.close();
+		}
+		catch(SQLException e)
+		{
+			System.out.println("Database Error: "+e.getMessage());
+		}
 	}
-	public void setCreator(String newCreator)
+	public static void setCreator(String newCreator, int ID)
 	{
-		creator = newCreator;
+		try
+		{
+			String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+			Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+			String query = "update non_books set creator = ? where nonBookID = ?";
+			PreparedStatement prepSt = connector.prepareStatement(query);
+        		prepSt.setString(1, newCreator);
+			prepSt.setInt(2, ID);
+			prepSt.executeUpdate();
+			connector.close();
+		}
+		catch(SQLException e)
+		{
+			System.out.println("Database Error: "+e.getMessage());
+		}
 	}
-	public void setGenre(String newGenre)
+	public static void setGenre(String newGenre, int ID)
 	{
-		genre = newGenre;
+		try
+		{
+			String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+			Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+			String query = "update non_books set genre = ? where nonBookID = ?";
+			PreparedStatement prepSt = connector.prepareStatement(query);
+        		prepSt.setString(1, newGenre);
+			prepSt.setInt(2, ID);
+			prepSt.executeUpdate();
+			connector.close();
+		}
+		catch(SQLException e)
+		{
+			System.out.println("Database Error: "+e.getMessage());
+		}
 	}
-	public void setQuant(int newQuant)
+	public static void setQuant(int newQuant,  int ID)
 	{
-		quantity = newQuant;
+		try
+		{
+			String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+			Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+			String query = "update non_books set quantity = ? where nonBookID = ?";
+			PreparedStatement prepSt = connector.prepareStatement(query);
+        		prepSt.setInt(1, newQuant);
+			prepSt.setInt(2, ID);
+			prepSt.executeUpdate();
+			connector.close();
+		}
+		catch(SQLException e)
+		{
+			System.out.println("Database Error: "+e.getMessage());
+		}
 	}
-	public void setQual(int newQual)
+	public static void setQual(int newQual,  int ID)
 	{
-		quality = newQual;
+		try
+		{
+			String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+			Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+			String query = "update non_books set quality = ? where nonBookID = ?";
+			PreparedStatement prepSt = connector.prepareStatement(query);
+        		prepSt.setInt(1, newQual);
+			prepSt.setInt(2, ID);
+			prepSt.executeUpdate();
+			connector.close();
+		}
+		catch(SQLException e)
+		{
+			System.out.println("Database Error: "+e.getMessage());
+		}
 	}
-	public void setTitle(String newTitle)
+	public static void setTitle(String newTitle,  int ID)
 	{
-		title = newTitle;
+		try
+		{
+			String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+			Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+			String query = "update non_books set title = ? where nonBookID = ?";
+			PreparedStatement prepSt = connector.prepareStatement(query);
+        		prepSt.setString(1, newTitle);
+			prepSt.setInt(2, ID);
+			prepSt.executeUpdate();
+			connector.close();
+		}
+		catch(SQLException e)
+		{
+			System.out.println("Database Error: "+e.getMessage());
+		}
 	}
-	public void setRelYr(int newRelYr)
+	public static void setRelYr(int newRelYr,  int ID)
 	{
-		releaseYear = newRelYr;
+		try
+		{
+			String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+			Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+			String query = "update non_books set releaseYear = ? where nonBookID = ?";
+			PreparedStatement prepSt = connector.prepareStatement(query);
+        		prepSt.setInt(1, newRelYr);
+			prepSt.setInt(2, ID);
+			prepSt.executeUpdate();
+			connector.close();
+		}
+		catch(SQLException e)
+		{
+			System.out.println("Database Error: "+e.getMessage());
+		}
 	}
-	public void setPubStud(String newPubStud)
+	public static void setPubStud(String newPubStud,  int ID)
 	{
-		pubOrStud = newPubStud;
+		try
+		{
+			String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+			Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+			String query = "update non_books set publisherStudio = ? where nonBookID = ?";
+			PreparedStatement prepSt = connector.prepareStatement(query);
+        		prepSt.setString(1, newPubStud);
+			prepSt.setInt(2, ID);
+			prepSt.executeUpdate();
+			connector.close();
+		}
+		catch(SQLException e)
+		{
+			System.out.println("Database Error: "+e.getMessage());
+		}
 	}
-	public void setIllust(String newIllust)
+	public static void setIllust(String newIllust,  int ID)
 	{
-		illust = newIllust;
+		try
+		{
+			String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+			Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+			String query = "update non_books set  illustrator = ? where nonBookID = ?";
+			PreparedStatement prepSt = connector.prepareStatement(query);
+        		prepSt.setString(1, newIllust);
+			prepSt.setInt(2, ID);
+			prepSt.executeUpdate();
+			connector.close();
+		}
+		catch(SQLException e)
+		{
+			System.out.println("Database Error: "+e.getMessage());
+		}
 	}
 }
 

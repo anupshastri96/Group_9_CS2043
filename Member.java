@@ -1,4 +1,6 @@
 public class Member {
+    private static int ID =100;
+    private final int memberID;
     private String name;
     private OutBook[] booksout;
     private NonBook[] otherRental;
@@ -6,6 +8,8 @@ public class Member {
     private double amtOwed;
 
     public Member(String name, OutBook[] booksout, NonBook[] otherRental, String email, double amtOwed) {
+        memberID = ID;
+        ID++;
         this.name = name;
         this.booksout = booksout;
         this.otherRental = otherRental;
@@ -14,6 +18,9 @@ public class Member {
     }
 
     // Getters and Setters
+    public int getID(){
+        return ID;
+    }
     public String getName() {
         return name;
     }

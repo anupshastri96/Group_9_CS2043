@@ -1,3 +1,5 @@
+import java.lang.reflect.Member;
+import java.sql.*;
 public class Library{
     public Book[] bStock;
     public NonBook[] nbStock;
@@ -21,83 +23,119 @@ public class Library{
     }
     
     public boolean removeBook(Book book1){
-        boolean success = false;
-        for(int i=0; i< bookCounter && !success; i++){
-            if(bStock[i]== book1){
-                bookCounter--;
-                //bStock[i] = bStock[bookCounter];
-                bStock[bookCounter] = null;
-                success = true;
-            } 
-                
+		try
+		{
+		//'sql5664279@gc127m13.cs.unb.ca'
+			//"sql5664279.cs.unb.ca"
+			String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+			Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+			String query = "update books set quantity = quantity -1 where bookID = ?;";
+		    PreparedStatement prepSt = connector.prepareStatement(query);
+            prepSt.setInt(1, 1);
+            int affectedRows = prepSt.executeUpdate();
+            if (affectedRows == 0)
+                System.out.println("Check in failed");
+            else
+                System.out.println("Check in succeeded");
+
+            
+            connector.close();
+		}
+		catch(SQLException e)
+        {   System.out.println("Database error" + e.getMessage());
         }
-        return success;
     }
     
     public boolean addBook(Book book1){
-        boolean success = false;
-        if(bookCounter < bStock.length){
-            bStock[bookCounter] = book1;
-            bookCounter++;
-            success = true;
+		try
+		{
+		//'sql5664279@gc127m13.cs.unb.ca'
+			//"sql5664279.cs.unb.ca"
+			String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+			Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+			String query = "update books set quantity = quantity +1 where bookID = ?;";
+		    PreparedStatement prepSt = connector.prepareStatement(query);
+            prepSt.setInt(1, 1);
+            int affectedRows = prepSt.executeUpdate();
+            if (affectedRows == 0)
+                System.out.println("Check in failed");
+            else
+                System.out.println("Check in succeeded");
+
+            
+            connector.close();
+		}
+		catch(SQLException e)
+        {   System.out.println("Database error" + e.getMessage());
         }
-        return success;
+        
     }
     
     public boolean addNonBook(NonBook nbook1){
-        boolean success = false;
-        if(nonBookCounter < nbStock.length){
-            nbStock[nonBookCounter] = nbook1;
-            nonBookCounter++;
-            success = true;
+        try
+		{
+		//'sql5664279@gc127m13.cs.unb.ca'
+			//"sql5664279.cs.unb.ca"
+			String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+			Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+			String query = "update non_books set quantity = quantity +1 where nonBookID = ?;";
+		    PreparedStatement prepSt = connector.prepareStatement(query);
+            prepSt.setInt(1, 1);
+            int affectedRows = prepSt.executeUpdate();
+            if (affectedRows == 0)
+                System.out.println("Check in failed");
+            else
+                System.out.println("Check in succeeded");
+
+            
+            connector.close();
+		}
+		catch(SQLException e)
+        {   System.out.println("Database error" + e.getMessage());
         }
-        return success;
     }
     public boolean removeNonBook(NonBook nbook1){
-        boolean success = false;
-        for(int i=0; i< nonBookCounter && !success; i++){
-            if(nbStock[i]== nbook1){
-                nonBookCounter--;
-                //bStock[i] = bStock[bookCounter];
-                nbStock[nonBookCounter] = null;
-                success = true;
-            } 
-                
+        try
+		{
+		//'sql5664279@gc127m13.cs.unb.ca'
+			//"sql5664279.cs.unb.ca"
+			String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+			Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+			String query = "update non_books set quantity = quantity -1 where nonBookID = ?;";
+		    PreparedStatement prepSt = connector.prepareStatement(query);
+            prepSt.setInt(1, 1);
+            int affectedRows = prepSt.executeUpdate();
+            if (affectedRows == 0)
+                System.out.println("Check in failed");
+            else
+                System.out.println("Check in succeeded");
+
+            
+            connector.close();
+		}
+		catch(SQLException e)
+        {   System.out.println("Database error" + e.getMessage());
         }
-        return success;
     }
 
     
-    public void firstNameSort(Book[] array)
-	{	Book temp;
-		char c1;
-		char c2;
-		boolean success =false;
-		// The value of pass goes from 1 to N-1
-		for (int pass=1; pass<array.length; pass++){
-			// Compare a series of adjacent pairs
-			for (int i=0; i<array.length-pass; i++){
-			    c1 = array[i].getAuthorFName().charAt(0);
-			    c2 = array[i+1].getAuthorFName().charAt(0);
-			    if(c1 > c2){
-			        temp       = array[i];
-					array[i]   = array[i+1];
-					array[i+1] = temp;
-			    }
-			    if(c1 == c2){
-			        for(int j=1; j< array.length && !success; j++){
-			            c1 = array[j].getAuthorFName().charAt(j);
-			            c2 = array[j+1].getAuthorFName().charAt(j);
-			            if(c1 > c2){
-			                temp       = array[j];
-					        array[j]   = array[j+1];
-					        array[j+1] = temp;
-					        success = true;
-			            }
-			        }
-			    }
-		    } // end outer for loop
-  	    }
+    public void firstNameSort()
+	{	try{
+		String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+		Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+		String query = "select * from books order by authorFirstName;";
+		PreparedStatement prepSt = connector.prepareStatement(query);
+		int affectedRows = prepSt.executeUpdate();
+            if (affectedRows == 0)
+                System.out.println("Check in failed");
+            else
+                System.out.println("Check in succeeded");
+
+            connector.close();
+		}
+		catch(SQLException e)
+        {   System.out.println("Database error" + e.getMessage());
+        }	
   	} // end bubbleSort()
   	
   	public void lastNameSort(Book[] array)

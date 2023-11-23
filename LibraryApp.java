@@ -1,6 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +18,7 @@ public class LibraryApp {
     // Create a list to store the non-book items
     private List<String> nonBookItems = new ArrayList<>();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
@@ -60,7 +64,7 @@ public class LibraryApp {
                 btnSearch.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         // Create a dialog for entering the search text
-                        String searchText = JOptionPane.showInputDialog(frame, "Enter the book name:");
+                        String searchText = JOptionPane.showInputDialog(frame, "Enter the book ID:");
 
                         // Convert the search text to lower case
                         searchText = searchText.toLowerCase();
@@ -78,36 +82,41 @@ public class LibraryApp {
                 });
                 booksPanel.add(btnSearch);
 
-                // Add a button for adding a new book
-                JButton btnAddNewBook = new JButton("Add New Book");
-                btnAddNewBook.addActionListener(new ActionListener() {
+                JButton btnAddNewCopy = new JButton("Add New Copy");
+                btnAddNewCopy.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        // Create a dialog for adding a new book
-                        JDialog addBookDialog = new JDialog(frame, "Add New Book", true);
+                        JDialog addBookDialog = new JDialog(frame, "Add New Copy", true);
                         addBookDialog.setLayout(new GridLayout(0, 2));
-
-                        // Add text fields for entering book details
-                        addBookDialog.add(new JLabel("Book Name:"));
-                        JTextField bookNameField = new JTextField();
-                        addBookDialog.add(bookNameField);
-
-                        addBookDialog.add(new JLabel("Author:"));
-                        JTextField authorField = new JTextField();
-                        addBookDialog.add(authorField);
-
-                        addBookDialog.add(new JLabel("Book Genre:"));
-                        JTextField bookGenreField = new JTextField();
-                        addBookDialog.add(bookGenreField);
-
-                        // Add a button to submit the new book
+                        addBookDialog.add(new JLabel("Book ID:"));
+                        JTextField bookIDField = new JTextField();
+                        addBookDialog.add(bookIDField);
                         JButton submitButton = new JButton("Submit");
                         submitButton.addActionListener(new ActionListener() {
                             public void actionPerformed(ActionEvent e) {
                                 // Add the new book to the list
-                                String newBook = bookNameField.getText() + ", " + authorField.getText() + ", " + bookGenreField.getText();
-                                books.add(newBook);
+                                		try
+		                                    {
+		                                    //'sql5664279@gc127m13.cs.unb.ca'
+			                                //"sql5664279.cs.unb.ca"
+			                                String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+			                                Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+			                                String query = "update books set quantity = quantity +1 where bookID = ?;";
+		                                    PreparedStatement prepSt = connector.prepareStatement(query);
+                                            int bookID  = Integer.parseInt(bookIDField.getText());
+                                            prepSt.setInt(1, bookID);
+                                            int affectedRows = prepSt.executeUpdate();
+                                            if (affectedRows == 0)
+                                                System.out.println("Book addition was not successful");
+                                            else
+                                                System.out.println("Book addition was successful");
 
-                                // Close the dialog
+            
+                                            connector.close();
+		                                    }
+		                                    catch(SQLException E){
+                                               System.out.println("Database error" + E.getMessage());
+                                            }
+                                            // Close the dialog
                                 addBookDialog.dispose();
                             }
                         });
@@ -118,24 +127,226 @@ public class LibraryApp {
                         addBookDialog.setVisible(true);
                     }
                 });
+                        booksPanel.add(btnAddNewCopy);            
+                                
+                
+
+                // Add a button for adding a new book
+                JButton btnAddNewBook = new JButton("Add New Book");
+                btnAddNewBook.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        // Create a dialog for adding a new book
+                        JDialog addBookDialog = new JDialog(frame, "Add New Book", true);
+                        addBookDialog.setLayout(new GridLayout(0, 2));
+                
+                        // Add text fields for entering book details
+                        addBookDialog.add(new JLabel("Book ID:"));
+                        JTextField bookIDField = new JTextField();
+                        addBookDialog.add(bookIDField);
+
+                        addBookDialog.add(new JLabel("title:"));
+                        JTextField titleField = new JTextField();
+                        addBookDialog.add(titleField);
+                
+                        addBookDialog.add(new JLabel("Author First Name:"));
+                        JTextField authorFNameField = new JTextField();
+                        addBookDialog.add(authorFNameField);
+                
+                        addBookDialog.add(new JLabel("Author Last Name:"));
+                        JTextField authorLNameField = new JTextField();
+                        addBookDialog.add(authorLNameField);
+                
+                        addBookDialog.add(new JLabel("Book Genre:"));
+                        JTextField genreField = new JTextField();
+                        addBookDialog.add(genreField);
+                
+                        addBookDialog.add(new JLabel("Quantity:"));
+                        JTextField quantityField = new JTextField();
+                        addBookDialog.add(quantityField);
+                
+                        addBookDialog.add(new JLabel("Quality:"));
+                        JTextField qualityField = new JTextField();
+                        addBookDialog.add(qualityField);
+                
+                        addBookDialog.add(new JLabel("Rating:"));
+                        JTextField ratingField = new JTextField();
+                        addBookDialog.add(ratingField);
+                
+                        addBookDialog.add(new JLabel("Release Year:"));
+                        JTextField releaseYearField = new JTextField();
+                        addBookDialog.add(releaseYearField);
+                
+                        addBookDialog.add(new JLabel("Publisher/Studio:"));
+                        JTextField pubOrStudioField = new JTextField();
+                        addBookDialog.add(pubOrStudioField);
+                
+                        addBookDialog.add(new JLabel("Illustrator:"));
+                        JTextField illusField = new JTextField();
+                        addBookDialog.add(illusField);
+                
+                        // Add a button to submit the new book
+                        JButton submitButton = new JButton("Submit");
+                        submitButton.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+                                // Validate and parse fields
+                                try {
+                                    int bookID = Integer.parseInt(bookIDField.getText());
+                                    String title1 = titleField.getText();
+                                    String authorFName = authorFNameField.getText();
+                                    String authorLName = authorLNameField.getText();
+                                    String genre = genreField.getText();
+                                    int quantity = Integer.parseInt(quantityField.getText());
+                                    String quality = qualityField.getText();
+                                    int rating = Integer.parseInt(ratingField.getText());
+                                    int releaseYear = Integer.parseInt(releaseYearField.getText());
+                                    String pubOrStudio = pubOrStudioField.getText();
+                                    String illus = illusField.getText();
+                
+                                    // Add your code to perform further validation or processing
+                
+                                    // Add the new book to the list
+                                    try {
+                                        //'sql5664279@gc127m13.cs.unb.ca'
+                                        //"sql5664279.cs.unb.ca"
+                                        String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+                                        Connection connector = DriverManager.getConnection(url, "sql5664279", "BD4wVguFkr");
+                                        String query = "insert into books values (?, ?, ?, ?, ?, ? ,? , ?, ?, ?, ?);";
+                                        PreparedStatement prepSt = connector.prepareStatement(query);
+                                        prepSt.setInt(1, bookID);
+                                        prepSt.setString(2,title1);
+                                        prepSt.setString(3, authorFName);
+                                        prepSt.setString(4, authorLName);
+                                        prepSt.setString(5, genre);
+                                        prepSt.setInt(6, quantity);
+                                        prepSt.setString(7, quality);
+                                        prepSt.setInt(8, rating);
+                                        prepSt.setInt(9, releaseYear);
+                                        prepSt.setString(10, pubOrStudio);
+                                        prepSt.setString(11, illus);
+                
+                                        int affectedRows = prepSt.executeUpdate();
+                                        if (affectedRows == 0)
+                                            System.out.println("Book addition was not successful");
+                                        else
+                                            System.out.println("Book addition was successful");
+                
+                                        connector.close();
+                                    } catch (SQLException E) {
+                                        System.out.println("Database error" + E.getMessage());
+                                    }
+                                } catch (NumberFormatException ex) {
+                                    // Handle the case where parsing to int fails
+                                    System.out.println("Invalid input for numeric fields. Please enter valid integers.");
+                                }
+                
+                                // Close the dialog
+                                addBookDialog.dispose();
+                            }
+                        });
+                
+                        addBookDialog.add(submitButton);
+                
+                        // Show the dialog
+                        addBookDialog.pack();
+                        addBookDialog.setVisible(true);
+                    }
+                });
                 booksPanel.add(btnAddNewBook);
 
                 // Add a button for removing a book
-                JButton btnRemoveBook = new JButton("Remove Book");
+                JButton btnRemoveBook = new JButton("Remove Copy");
                 btnRemoveBook.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        // Create a dialog for entering the book name
-                        String bookName = JOptionPane.showInputDialog(frame, "Enter the book name to remove:");
+                        JDialog addBookDialog = new JDialog(frame, "Remove Copy", true);
+                        addBookDialog.setLayout(new GridLayout(0, 2));
+                        addBookDialog.add(new JLabel("Book ID:"));
+                        JTextField bookIDField = new JTextField();
+                        addBookDialog.add(bookIDField);
+                        JButton submitButton = new JButton("Submit");
+                        submitButton.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+                                // Add the new book to the list
+                                		try
+		                                    {
+		                                    //'sql5664279@gc127m13.cs.unb.ca'
+			                                //"sql5664279.cs.unb.ca"
+			                                String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+			                                Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+			                                String query = "update books set quantity = quantity -1 where bookID = ?;";
+		                                    PreparedStatement prepSt = connector.prepareStatement(query);
+                                            int bookID  = Integer.parseInt(bookIDField.getText());
+                                            prepSt.setInt(1, bookID);
+                                            int affectedRows = prepSt.executeUpdate();
+                                            if (affectedRows == 0)
+                                                System.out.println("Book removal was not successful");
+                                            else
+                                                System.out.println("Book removal was successful");
 
-                        // Convert the book name to lower case
-                        bookName = bookName.toLowerCase();
+            
+                                            connector.close();
+		                                    }
+		                                    catch(SQLException E){
+                                               System.out.println("Database error" + E.getMessage());
+                                            }
+                                            // Close the dialog
+                                addBookDialog.dispose();
+                            }
+                        });
+                        addBookDialog.add(submitButton);
 
-                        // Add your code for removing books
-                        String finalBookName = bookName;
-                        books.removeIf(book -> book.toLowerCase().contains(finalBookName));
+                        // Show the dialog
+                        addBookDialog.pack();
+                        addBookDialog.setVisible(true);
                     }
                 });
-                booksPanel.add(btnRemoveBook);
+                        booksPanel.add(btnRemoveBook);
+
+                JButton btnRemoveBook1 = new JButton("Remove Entire Book");
+                btnRemoveBook1.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        JDialog addBookDialog = new JDialog(frame, "Remove Entire Book", true);
+                        addBookDialog.setLayout(new GridLayout(0, 2));
+                        addBookDialog.add(new JLabel("Book ID:"));
+                        JTextField bookIDField = new JTextField();
+                        addBookDialog.add(bookIDField);
+                        JButton submitButton = new JButton("Submit");
+                        submitButton.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+                                // Add the new book to the list
+                                		try
+		                                    {
+		                                    //'sql5664279@gc127m13.cs.unb.ca'
+			                                //"sql5664279.cs.unb.ca"
+			                                String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+			                                Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+			                                String query = "delete from books where bookID = ?;";
+		                                    PreparedStatement prepSt = connector.prepareStatement(query);
+                                            int bookID  = Integer.parseInt(bookIDField.getText());
+                                            prepSt.setInt(1, bookID);
+                                            int affectedRows = prepSt.executeUpdate();
+                                            if (affectedRows == 0)
+                                                System.out.println("Book removal was not successful");
+                                            else
+                                                System.out.println("Book removal was successful");
+
+            
+                                            connector.close();
+		                                    }
+		                                    catch(SQLException E){
+                                               System.out.println("Database error" + E.getMessage());
+                                            }
+                                            // Close the dialog
+                                addBookDialog.dispose();
+                            }
+                        });
+                        addBookDialog.add(submitButton);
+
+                        // Show the dialog
+                        addBookDialog.pack();
+                        addBookDialog.setVisible(true);
+                    }
+                });
+                        booksPanel.add(btnRemoveBook1);
 
                 JButton btnReturn = new JButton("Return");
                 btnReturn.addActionListener(new ActionListener() {
@@ -162,6 +373,8 @@ public class LibraryApp {
         });
         panel.add(btnBooks);
 
+        
+
         JButton btnNonBookItems = new JButton("Non-Books Items");
         btnNonBookItems.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -172,6 +385,53 @@ public class LibraryApp {
                 // Add a search field
                 JTextField searchField = new JTextField();
                 nonBooksPanel.add(searchField);
+
+                JButton btnAddNewNonBookCopy = new JButton("Add New Non-Book Copy");
+                btnAddNewNonBookCopy.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        JDialog addBookDialog = new JDialog(frame, "Add New Non-Book Copy", true);
+                        addBookDialog.setLayout(new GridLayout(0, 2));
+                        addBookDialog.add(new JLabel("Book ID:"));
+                        JTextField bookIDField = new JTextField();
+                        addBookDialog.add(bookIDField);
+                        JButton submitButton = new JButton("Submit");
+                        submitButton.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+                                // Add the new book to the list
+                                		try
+		                                    {
+		                                    //'sql5664279@gc127m13.cs.unb.ca'
+			                                //"sql5664279.cs.unb.ca"
+			                                String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+			                                Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+			                                String query = "update non_books set quantity = quantity +1 where nonBookID = ?;";
+		                                    PreparedStatement prepSt = connector.prepareStatement(query);
+                                            int bookID  = Integer.parseInt(bookIDField.getText());
+                                            prepSt.setInt(1, bookID);
+                                            int affectedRows = prepSt.executeUpdate();
+                                            if (affectedRows == 0)
+                                                System.out.println("Non-Book addition was not successful");
+                                            else
+                                                System.out.println("Non-Book addition was successful");
+
+            
+                                            connector.close();
+		                                    }
+		                                    catch(SQLException E){
+                                               System.out.println("Database error" + E.getMessage());
+                                            }
+                                            // Close the dialog
+                                addBookDialog.dispose();
+                            }
+                        });
+                        addBookDialog.add(submitButton);
+
+                        // Show the dialog
+                        addBookDialog.pack();
+                        addBookDialog.setVisible(true);
+                    }
+                });
+                        nonBooksPanel.add(btnAddNewNonBookCopy); 
 
                 // Add a button for searching non-book items
                 JButton btnSearch = new JButton("Search Non-Books Items");
@@ -210,21 +470,52 @@ public class LibraryApp {
                 nonBooksPanel.add(btnAddNewItem);
 
                 // Add a button for removing a non-book item
-                JButton btnRemoveItem = new JButton("Remove Item");
+                JButton btnRemoveItem = new JButton("Remove Non-book Copy");
                 btnRemoveItem.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        // Create a dialog for entering the item name
-                        String itemName = JOptionPane.showInputDialog(frame, "Enter the non-book item name to remove:");
+                        JDialog addBookDialog = new JDialog(frame, "Remove Non-book Copy", true);
+                        addBookDialog.setLayout(new GridLayout(0, 2));
+                        addBookDialog.add(new JLabel("Non-Book ID:"));
+                        JTextField bookIDField = new JTextField();
+                        addBookDialog.add(bookIDField);
+                        JButton submitButton = new JButton("Submit");
+                        submitButton.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+                                // Add the new book to the list
+                                		try
+		                                    {
+		                                    //'sql5664279@gc127m13.cs.unb.ca'
+			                                //"sql5664279.cs.unb.ca"
+			                                String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+			                                Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+			                                String query = "update non_books set quantity = quantity -1 where nonBookID = ?;";
+		                                    PreparedStatement prepSt = connector.prepareStatement(query);
+                                            int bookID  = Integer.parseInt(bookIDField.getText());
+                                            prepSt.setInt(1, bookID);
+                                            int affectedRows = prepSt.executeUpdate();
+                                            if (affectedRows == 0)
+                                                System.out.println("Non-Book removal was not successful");
+                                            else
+                                                System.out.println("Non-Book removal was successful");
 
-                        // Convert the item name to lower case
-                        itemName = itemName.toLowerCase();
+            
+                                            connector.close();
+		                                    }
+		                                    catch(SQLException E){
+                                               System.out.println("Database error" + E.getMessage());
+                                            }
+                                            // Close the dialog
+                                addBookDialog.dispose();
+                            }
+                        });
+                        addBookDialog.add(submitButton);
 
-                        // Add your code for removing non-book items
-                        String finalItemName = itemName;
-                        nonBookItems.removeIf(item -> item.toLowerCase().contains(finalItemName));
+                        // Show the dialog
+                        addBookDialog.pack();
+                        addBookDialog.setVisible(true);
                     }
                 });
-                nonBooksPanel.add(btnRemoveItem);
+                        nonBooksPanel.add(btnRemoveItem);
 
                 JButton btnReturn = new JButton("Return");
                 btnReturn.addActionListener(new ActionListener() {
@@ -298,3 +589,4 @@ public class LibraryApp {
         frame.repaint();
     }
 }
+

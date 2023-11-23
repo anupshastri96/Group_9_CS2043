@@ -225,7 +225,7 @@ public class NonBook
 		Statement stmt = connector.createStatement();
          	ResultSet rs = stmt.executeQuery("SELECT * from non_books where nonBookID = "+ID);
          	
-         	System.out.println("ID  Title  ItemType  Creator  Genre  Quantity  Quality  Rating  ReleaseYear  Publisher/Studio  Illustrator");
+         	System.out.println("ID\tTitle\t\tItemType\tCreator\t\tGenre\t\tQuantity\tQuality\t\tRating\tReleaseYear\tPublisher/Studio\tIllustrator");
          while(rs.next())
          {
          	int id = rs.getInt("nonBookID");
@@ -239,7 +239,7 @@ public class NonBook
             int relY = rs.getInt("releaseYear");
             String pubS = rs.getString("publisherStudio");
             String ill = rs.getString("illustrator");
-            System.out.println(id+",  "+title+",  "+IT+",  "+cre+",  "+gen+",  "+quan+",  "+qual+",  "+rat+",  "+relY+",  "+pubS+",  "+ill);
+            System.out.println(id+"	"+title+"  "+IT+"\t\t"+cre+"\t\t"+gen+"\t   "+quan+"\t\t"+qual+"\t\t"+rat+"\t   "+relY+"\t\t"+pubS+"\t   "+ill);
             }
 	        connector.close();
       		}
@@ -255,8 +255,9 @@ public class NonBook
 		String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
 		Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
 		Statement stmt = connector.createStatement();
-         ResultSet rs = stmt.executeQuery("SELECT * FROM non_books");
-         System.out.println("ID  Title  ItemType  Creator  Genre  Quantity  Quality  Rating  ReleaseYear  Publisher/Studio  Illustrator");
+         	ResultSet rs = stmt.executeQuery("SELECT * FROM non_books");	
+         	System.out.printf("%-4s | %-30s | %-25s | %-25s | %-25s | %-4s | %-25s | %-4s | %-4s | %-25s | %-25s\n","ID","Title","ItemType","Creator","Genre","Quantity","Quality","Rating","ReleaseYear","Publisher/Studio","Illustrator");				//
+         	//System.out.println("ID\tTitle\t\tItemType\tCreator\t\tGenre\t\tQuantity\tQuality\t\tRating\tReleaseYear\tPublisher/	Studio\tIllustrator");
          
          while (rs.next()) {
             int id = rs.getInt("nonBookID");
@@ -270,7 +271,8 @@ public class NonBook
             int relY = rs.getInt("releaseYear");
             String pubS = rs.getString("publisherStudio");
             String ill = rs.getString("illustrator");
-            System.out.println(id+",  "+title+",  "+IT+",  "+cre+",  "+gen+",  "+quan+",  "+qual+",  "+rat+",  "+relY+",  "+pubS+",  "+ill);
+            System.out.printf("%-4s | %-30s | %-25s | %-25s | %-25s | %-8s | %-25s | %-6s | %-10s | %-26s | %-25s\n",id, title, IT, cre, gen, quan, qual, rat, relY, pubS, ill);
+            //System.out.println(id+",  "+title+",  "+IT+",  "+cre+",  "+gen+",  "+quan+",  "+qual+",  "+rat+",  "+relY+",  "+pubS+",  "+ill);
             	}
 	        connector.close();
       		}

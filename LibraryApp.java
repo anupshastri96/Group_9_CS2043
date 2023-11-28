@@ -8,6 +8,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.sql.ResultSet;
+import java.util.Vector;
+
 public class LibraryApp {
     private JFrame frame;
     private JTable table;
@@ -30,19 +35,30 @@ public class LibraryApp {
             }
         });
     }
-
+    
+    
     public LibraryApp() {
         initialize();
     }
 
     private void initialize() {
-        frame = new JFrame();
-        frame.setBounds(100, 100, 450, 300);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame = new JFrame();
+    frame.setBounds(100, 100, 450, 300);
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Show the home screen
-        showHomeScreen();
-    }
+    // Create the JTable with a DefaultTableModel
+    DefaultTableModel model = new DefaultTableModel();
+    table = new JTable(model);
+
+    // Add the JTable to a JScrollPane for better display
+    JScrollPane scrollPane = new JScrollPane(table);
+
+    // Add the JScrollPane to the frame's content pane
+    frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
+
+    // Show the home screen
+    showHomeScreen();
+}
 
     private void showHomeScreen() {
         JPanel panel = new JPanel();
@@ -60,27 +76,64 @@ public class LibraryApp {
                 booksPanel.add(searchField);
 
                 // Add a button for searching books
-                JButton btnSearch = new JButton("Search Books");
-                btnSearch.addActionListener(new ActionListener() {
+                JButton btnSearchBook = new JButton("Search Books");
+                btnSearchBook.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        // Create a dialog for entering the search text
-                        String searchText = JOptionPane.showInputDialog(frame, "Enter the book ID:");
+                        JDialog searchBookDialog = new JDialog(frame, "Search Books", true);
+                        searchBookDialog.setLayout(new GridLayout(0, 2));
+                        
+                        searchBookDialog.add(new JLabel("title:"));
+                        JTextField titleField = new JTextField();
+                        searchBookDialog.add(titleField);
 
-                        // Convert the search text to lower case
-                        searchText = searchText.toLowerCase();
+                        searchBookDialog.add(new JLabel("Book Genre:"));
+                        JTextField genreField = new JTextField();
+                        searchBookDialog.add(genreField);
 
-                        // Add your code for searching books
-                        for (String book : books) {
-                            // Convert the book data to lower case before comparing
-                            if (book.toLowerCase().contains(searchText)) {
-                                JOptionPane.showMessageDialog(frame, "Book found: " + book);
-                                return;
+                        JButton submitButton = new JButton("Submit");
+                        submitButton.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+                                // Add the new book to the list
+                                		try
+		                                    {
+		                                    String title1 = titleField.getText();
+                                            String genre = genreField.getText();
+		                                    //'sql5664279@gc127m13.cs.unb.ca'
+			                                //"sql5664279.cs.unb.ca"
+			                                String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+			                                Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+			                                String query = "select * from books where title like ? and genre like ?;";
+		                                    PreparedStatement prepSt = connector.prepareStatement(query);
+                                            prepSt.setString(1, "%" + title1 + "%");
+                                            prepSt.setString(2, "%" + genre + "%");
+                                          
+                                            
+                                            ResultSet rs = prepSt.executeQuery();
+                                            DefaultTableModel model = (DefaultTableModel) table.getModel(); 
+                                            System.out.printf("%-45s | %-23s |\n", "Title", "Genre");
+                                            System.out.println("-------------------------------------------------------------------------");
+                                            while (rs.next()) {
+                                            System.out.printf("%-45s | %-23s |\n", rs.getString(2), rs.getString(5));
+                                            model.addRow(new String[]{rs.getString(2), rs.getString(5)});
+                                            }
+                                        
+                                            connector.close();
+		                                    }
+		                                    catch(SQLException E){
+                                               System.out.println("Database error" + E.getMessage());
+                                            }
+                                            // Close the dialog
+                                searchBookDialog.dispose();
                             }
-                        }
-                        JOptionPane.showMessageDialog(frame, "Book not found: " + searchText);
+                        });
+                        searchBookDialog.add(submitButton);
+
+                        // Show the dialog
+                        searchBookDialog.pack();
+                        searchBookDialog.setVisible(true);
                     }
                 });
-                booksPanel.add(btnSearch);
+                booksPanel.add(btnSearchBook);
 
                 JButton btnAddNewCopy = new JButton("Add New Copy");
                 btnAddNewCopy.addActionListener(new ActionListener() {
@@ -434,27 +487,67 @@ public class LibraryApp {
                         nonBooksPanel.add(btnAddNewNonBookCopy); 
 
                 // Add a button for searching non-book items
-                JButton btnSearch = new JButton("Search Non-Books Items");
-                btnSearch.addActionListener(new ActionListener() {
+              
+
+                // Add a button for searching books
+                JButton btnSearchNonBook = new JButton("Search Non Books");
+                btnSearchNonBook.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        // Create a dialog for entering the search text
-                        String searchText = JOptionPane.showInputDialog(frame, "Enter the non-book item name:");
+                        JDialog searchNonBookDialog = new JDialog(frame, "Search Non Books", true);
+                        searchNonBookDialog.setLayout(new GridLayout(0, 2));
+                        
+                        searchNonBookDialog.add(new JLabel("title:"));
+                        JTextField titleField = new JTextField();
+                        searchNonBookDialog.add(titleField);
 
-                        // Convert the search text to lower case
-                        searchText = searchText.toLowerCase();
+                        searchNonBookDialog.add(new JLabel("Book Genre:"));
+                        JTextField genreField = new JTextField();
+                        searchNonBookDialog.add(genreField);
 
-                        // Add your code for searching non-book items
-                        for (String item : nonBookItems) {
-                            // Convert the item data to lower case before comparing
-                            if (item.toLowerCase().contains(searchText)) {
-                                JOptionPane.showMessageDialog(frame, "Item found: " + item);
-                                return;
+                        JButton submitButton = new JButton("Submit");
+                        submitButton.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+                                // Add the new book to the list
+                                		try
+		                                    {
+		                                    String title1 = titleField.getText();
+                                            String genre = genreField.getText();
+		                                    //'sql5664279@gc127m13.cs.unb.ca'
+			                                //"sql5664279.cs.unb.ca"
+			                                String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+			                                Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+			                                String query = "select * from non_books where title like ? and genre like ?;";
+		                                    PreparedStatement prepSt = connector.prepareStatement(query);
+                                            prepSt.setString(1, "%" + title1 + "%");
+                                            prepSt.setString(2, "%" + genre + "%");
+                                          
+                                            
+                                            ResultSet rs = prepSt.executeQuery();
+                                            DefaultTableModel model = (DefaultTableModel) table.getModel();
+                                            System.out.printf("%-30s | %-18s |\n", "Title", "Genre");
+                                            System.out.println("-----------------------------------------------------");
+                                            while (rs.next()) {
+                                            System.out.printf("%-30s | %-18s |\n", rs.getString(2), rs.getString(5));
+                                            model.addRow(new String[]{rs.getString(2), rs.getString(5)});
+                                            }
+                                        
+                                            connector.close();
+		                                    }
+		                                    catch(SQLException E){
+                                               System.out.println("Database error" + E.getMessage());
+                                            }
+                                            // Close the dialog
+                                searchNonBookDialog.dispose();
                             }
-                        }
-                        JOptionPane.showMessageDialog(frame, "Item not found: " + searchText);
+                        });
+                        searchNonBookDialog.add(submitButton);
+
+                        // Show the dialog
+                        searchNonBookDialog.pack();
+                        searchNonBookDialog.setVisible(true);
                     }
                 });
-                nonBooksPanel.add(btnSearch);
+                nonBooksPanel.add(btnSearchNonBook);
 
                 // Add a button for adding a new non-book item
                 JButton btnAddNewItem = new JButton("Add New Item");
@@ -589,4 +682,3 @@ public class LibraryApp {
         frame.repaint();
     }
 }
-

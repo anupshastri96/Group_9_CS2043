@@ -550,17 +550,124 @@ public class LibraryApp {
                 nonBooksPanel.add(btnSearchNonBook);
 
                 // Add a button for adding a new non-book item
-                JButton btnAddNewItem = new JButton("Add New Item");
-                btnAddNewItem.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        // Create a dialog for adding a new non-book item
-                        String newItem = JOptionPane.showInputDialog(frame, "Enter the new non-book item name:");
+                                JButton btnAddNewNonBook = new JButton("Add New Non-Book");
+				btnAddNewNonBook.addActionListener(new ActionListener() {
+				    public void actionPerformed(ActionEvent e) {
+				        // Create a dialog for adding a new non-book
+				        JDialog addNonBookDialog = new JDialog(frame, "Add New Non-Book", true);
+				        addNonBookDialog.setLayout(new GridLayout(0, 2));
 
-                        // Add the new item to the list
-                        nonBookItems.add(newItem);
-                    }
-                });
-                nonBooksPanel.add(btnAddNewItem);
+				        // Add text fields for entering non-book details
+				        addNonBookDialog.add(new JLabel("Non-Book ID:"));
+				        JTextField nonBookIDField = new JTextField();
+				        addNonBookDialog.add(nonBookIDField);
+
+				        addNonBookDialog.add(new JLabel("Title:"));
+				        JTextField titleField = new JTextField();
+				        addNonBookDialog.add(titleField);
+
+				        addNonBookDialog.add(new JLabel("Item Type:"));
+				        JTextField itemTypeField = new JTextField();
+				        addNonBookDialog.add(itemTypeField);
+
+				        addNonBookDialog.add(new JLabel("Creator:"));
+				        JTextField creatorField = new JTextField();
+				        addNonBookDialog.add(creatorField);
+
+				        addNonBookDialog.add(new JLabel("Genre:"));
+				        JTextField genreField = new JTextField();
+				        addNonBookDialog.add(genreField);
+
+				        addNonBookDialog.add(new JLabel("Quantity:"));
+				        JTextField quantityField = new JTextField();
+				        addNonBookDialog.add(quantityField); 
+
+				        addNonBookDialog.add(new JLabel("Quality:"));
+				        JTextField qualityField = new JTextField();
+				        addNonBookDialog.add(qualityField);
+
+				        addNonBookDialog.add(new JLabel("Rating:"));
+				        JTextField ratingField = new JTextField();
+				        addNonBookDialog.add(ratingField);
+
+				        addNonBookDialog.add(new JLabel("Release Year:"));
+				        JTextField releaseYearField = new JTextField();
+				        addNonBookDialog.add(releaseYearField);
+
+				        addNonBookDialog.add(new JLabel("Publisher/Studio:"));
+				        JTextField publisherStudioField = new JTextField();
+				        addNonBookDialog.add(publisherStudioField);
+
+				        addNonBookDialog.add(new JLabel("Illustrator:"));
+				        JTextField illustratorField = new JTextField();
+				        addNonBookDialog.add(illustratorField);
+
+				        // Add a button to submit the new non-book
+				        JButton submitButton = new JButton("Submit");
+				        submitButton.addActionListener(new ActionListener() {
+				            public void actionPerformed(ActionEvent e) {
+				                // Validate and parse fields
+				                try {
+				                    int nonBookID = Integer.parseInt(nonBookIDField.getText());
+				                    String title = titleField.getText();
+				                    String itemType = itemTypeField.getText();
+				                    String creator = creatorField.getText();
+				                    String genre = genreField.getText();
+				                    int quantity = Integer.parseInt(quantityField.getText());
+				                    String quality = qualityField.getText();
+				                    int rating = Integer.parseInt(ratingField.getText());
+				                    int releaseYear = Integer.parseInt(releaseYearField.getText());
+				                    String publisherStudio = publisherStudioField.getText();
+				                    String illustrator = illustratorField.getText();
+
+				                    // Add your code to perform further validation or processing
+
+				                    // Add the new non-book to the list
+				                    try {
+				                        String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+				                        Connection connector = DriverManager.getConnection(url, "sql5664279", "BD4wVguFkr");
+				                        String query = "insert into non_books values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+				                        PreparedStatement prepSt = connector.prepareStatement(query);
+				                        prepSt.setInt(1, nonBookID);
+				                        prepSt.setString(2, title);
+				                        prepSt.setString(3, itemType);
+				                        prepSt.setString(4, creator);
+				                        prepSt.setString(5, genre);
+				                        prepSt.setInt(6, quantity);
+				                        prepSt.setString(7, quality);
+				                        prepSt.setInt(8, rating);
+				                        prepSt.setInt(9, releaseYear);
+				                        prepSt.setString(10, publisherStudio);
+				                        prepSt.setString(11, illustrator);
+
+				                        int affectedRows = prepSt.executeUpdate();
+				                        if (affectedRows == 0)
+				                            System.out.println("Non-Book addition was not successful");
+				                        else
+				                            System.out.println("Non-Book addition was successful");
+
+				                        connector.close();
+				                    } catch (SQLException E) {
+				                        System.out.println("Database error" + E.getMessage());
+				                    }
+				                } catch (NumberFormatException ex) {
+				                    // Handle the case where parsing to int fails
+				                    System.out.println("Invalid input for numeric fields. Please enter valid integers.");
+				                }
+
+				                // Close the dialog
+				                addNonBookDialog.dispose();
+				            }
+				        });
+
+				        addNonBookDialog.add(submitButton);
+
+				        // Show the dialog
+				        addNonBookDialog.pack();
+				        addNonBookDialog.setVisible(true);
+				    }
+				});
+				nonBooksPanel.add(btnAddNewNonBook);
 
                 // Add a button for removing a non-book item
                 JButton btnRemoveItem = new JButton("Remove Non-book Copy");
@@ -609,6 +716,62 @@ public class LibraryApp {
                     }
                 });
                         nonBooksPanel.add(btnRemoveItem);
+                
+                	JButton btnRemoveNonBook = new JButton("Remove Entire Non-Book");
+                        btnRemoveNonBook.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+                                // Create a dialog for removing an entire non-book
+                                JDialog removeNonBookDialog = new JDialog(frame, "Remove Entire Non-Book", true);
+                                removeNonBookDialog.setLayout(new GridLayout(0, 2));
+                        
+                                // Add text field for entering non-book ID
+                                removeNonBookDialog.add(new JLabel("Non-Book ID:"));
+                                JTextField nonBookIDField = new JTextField();
+                                removeNonBookDialog.add(nonBookIDField);
+                        
+                                // Add a button to submit the removal of the non-book
+                                JButton submitButton = new JButton("Submit");
+                                submitButton.addActionListener(new ActionListener() {
+                                    public void actionPerformed(ActionEvent e) {
+                                        try {
+                                            int nonBookID = Integer.parseInt(nonBookIDField.getText());
+                        
+                                            // Remove the entire non-book from the list
+                                            try {
+                                                String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+                                                Connection connector = DriverManager.getConnection(url, "sql5664279", "BD4wVguFkr");
+                                                String query = "delete from non_books where nonBookID = ?;";
+                                                PreparedStatement prepSt = connector.prepareStatement(query);
+                                                prepSt.setInt(1, nonBookID);
+                        
+                                                int affectedRows = prepSt.executeUpdate();
+                                                if (affectedRows == 0)
+                                                    System.out.println("Non-Book removal was not successful");
+                                                else
+                                                    System.out.println("Non-Book removal was successful");
+                        
+                                                connector.close();
+                                            } catch (SQLException E) {
+                                                System.out.println("Database error" + E.getMessage());
+                                            }
+                                        } catch (NumberFormatException ex) {
+                                            System.out.println("Invalid input for numeric fields. Please enter a valid integer for Non-Book ID.");
+                                        }
+                        
+                                        // Close the dialog
+                                        removeNonBookDialog.dispose();
+                                    }
+                                });
+                        
+                                removeNonBookDialog.add(submitButton);
+                        
+                                // Show the dialog
+                                removeNonBookDialog.pack();
+                                removeNonBookDialog.setVisible(true);
+                            }
+                        });
+                        nonBooksPanel.add(btnRemoveNonBook);
+                        
 
                 JButton btnReturn = new JButton("Return");
                 btnReturn.addActionListener(new ActionListener() {

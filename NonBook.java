@@ -1,8 +1,7 @@
 import java.util.HashMap;
-//import com.mysql.jdbc.Statement;
 import java.sql.*;
 /*
- * setenv CLASSPATH .:/usr/share/java/mysql-connector-java.jar
+ * setenv CLASSPATH .\:/usr/share/java/mysql-connector-java.jar
  */
 public class NonBook 
 {
@@ -256,8 +255,7 @@ public class NonBook
 		Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
 		Statement stmt = connector.createStatement();
          	ResultSet rs = stmt.executeQuery("SELECT * FROM non_books");	
-         	System.out.printf("%-4s | %-30s | %-25s | %-25s | %-25s | %-4s | %-25s | %-4s | %-4s | %-25s | %-25s\n","ID","Title","ItemType","Creator","Genre","Quantity","Quality","Rating","ReleaseYear","Publisher/Studio","Illustrator");				//
-         	//System.out.println("ID\tTitle\t\tItemType\tCreator\t\tGenre\t\tQuantity\tQuality\t\tRating\tReleaseYear\tPublisher/	Studio\tIllustrator");
+         	System.out.printf("%-4s | %-30s | %-25s | %-25s | %-25s | %-8s | %-25s | %-6s | %-10s | %-26s | %-25s\n","ID","Title","ItemType","Creator","Genre","Quantity","Quality","Rating","ReleaseYear","Publisher/Studio","Illustrator");
          
          while (rs.next()) {
             int id = rs.getInt("nonBookID");
@@ -272,7 +270,130 @@ public class NonBook
             String pubS = rs.getString("publisherStudio");
             String ill = rs.getString("illustrator");
             System.out.printf("%-4s | %-30s | %-25s | %-25s | %-25s | %-8s | %-25s | %-6s | %-10s | %-26s | %-25s\n",id, title, IT, cre, gen, quan, qual, rat, relY, pubS, ill);
-            //System.out.println(id+",  "+title+",  "+IT+",  "+cre+",  "+gen+",  "+quan+",  "+qual+",  "+rat+",  "+relY+",  "+pubS+",  "+ill);
+            	}
+	        connector.close();
+      		}
+      catch(SQLException e)
+		{
+			System.out.println("Database Error: "+e.getMessage());
+		}
+	}
+	public static void genreSort()
+	{
+	try
+		{
+		String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+		Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+		Statement stmt = connector.createStatement();
+         	ResultSet rs = stmt.executeQuery("SELECT * FROM non_books order by genre");	
+         	System.out.printf("%-4s | %-30s | %-25s | %-25s | %-25s | %-8s | %-25s | %-6s | %-10s | %-26s | %-25s\n","ID","Title","ItemType","Creator","Genre","Quantity","Quality","Rating","ReleaseYear","Publisher/Studio","Illustrator");
+         
+         while (rs.next()) {
+            int id = rs.getInt("nonBookID");
+            String title = rs.getString("title");
+            String IT = rs.getString("itemType");
+            String cre = rs.getString("creator");
+            String gen = rs.getString("genre");
+            int quan = rs.getInt("quantity");
+            String qual = rs.getString("quality");
+            float rat = rs.getFloat("rating");
+            int relY = rs.getInt("releaseYear");
+            String pubS = rs.getString("publisherStudio");
+            String ill = rs.getString("illustrator");
+            System.out.printf("%-4s | %-30s | %-25s | %-25s | %-25s | %-8s | %-25s | %-6s | %-10s | %-26s | %-25s\n",id, title, IT, cre, gen, quan, qual, rat, relY, pubS, ill);
+            	}
+	        connector.close();
+      		}
+      catch(SQLException e)
+		{
+			System.out.println("Database Error: "+e.getMessage());
+		}
+	}
+	public static void titleSort()
+	{
+	try
+		{
+		String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+		Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+		Statement stmt = connector.createStatement();
+         	ResultSet rs = stmt.executeQuery("SELECT * FROM non_books order by title");	
+         	System.out.printf("%-4s | %-30s | %-25s | %-25s | %-25s | %-8s | %-25s | %-6s | %-10s | %-26s | %-25s\n","ID","Title","ItemType","Creator","Genre","Quantity","Quality","Rating","ReleaseYear","Publisher/Studio","Illustrator");
+         
+         while (rs.next()) {
+            int id = rs.getInt("nonBookID");
+            String title = rs.getString("title");
+            String IT = rs.getString("itemType");
+            String cre = rs.getString("creator");
+            String gen = rs.getString("genre");
+            int quan = rs.getInt("quantity");
+            String qual = rs.getString("quality");
+            float rat = rs.getFloat("rating");
+            int relY = rs.getInt("releaseYear");
+            String pubS = rs.getString("publisherStudio");
+            String ill = rs.getString("illustrator");
+            System.out.printf("%-4s | %-30s | %-25s | %-25s | %-25s | %-8s | %-25s | %-6s | %-10s | %-26s | %-25s\n",id, title, IT, cre, gen, quan, qual, rat, relY, pubS, ill);
+            	}
+	        connector.close();
+      		}
+      catch(SQLException e)
+		{
+			System.out.println("Database Error: "+e.getMessage());
+		}
+	}
+	public static void yearSort()
+	{
+	try
+		{
+		String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+		Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+		Statement stmt = connector.createStatement();
+         	ResultSet rs = stmt.executeQuery("SELECT * FROM non_books order by releaseYear");	
+         	System.out.printf("%-4s | %-30s | %-25s | %-25s | %-25s | %-8s | %-25s | %-6s | %-10s | %-26s | %-25s\n","ID","Title","ItemType","Creator","Genre","Quantity","Quality","Rating","ReleaseYear","Publisher/Studio","Illustrator");
+         
+         while (rs.next()) {
+            int id = rs.getInt("nonBookID");
+            String title = rs.getString("title");
+            String IT = rs.getString("itemType");
+            String cre = rs.getString("creator");
+            String gen = rs.getString("genre");
+            int quan = rs.getInt("quantity");
+            String qual = rs.getString("quality");
+            float rat = rs.getFloat("rating");
+            int relY = rs.getInt("releaseYear");
+            String pubS = rs.getString("publisherStudio");
+            String ill = rs.getString("illustrator");
+            System.out.printf("%-4s | %-30s | %-25s | %-25s | %-25s | %-8s | %-25s | %-6s | %-10s | %-26s | %-25s\n",id, title, IT, cre, gen, quan, qual, rat, relY, pubS, ill);
+            	}
+	        connector.close();
+      		}
+      catch(SQLException e)
+		{
+			System.out.println("Database Error: "+e.getMessage());
+		}
+	}
+	public static void rateSort()
+	{
+	try
+		{
+		String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+		Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+		Statement stmt = connector.createStatement();
+         	ResultSet rs = stmt.executeQuery("SELECT * FROM non_books order by rating");	
+         	System.out.printf("%-4s | %-30s | %-25s | %-25s | %-25s | %-8s | %-25s | %-6s | %-10s | %-26s | %-25s\n","ID","Title","ItemType","Creator","Genre","Quantity","Quality","Rating","ReleaseYear","Publisher/Studio","Illustrator");
+         
+         while (rs.next()) {
+            int id = rs.getInt("nonBookID");
+            String title = rs.getString("title");
+            String IT = rs.getString("itemType");
+            String cre = rs.getString("creator");
+            String gen = rs.getString("genre");
+            int quan = rs.getInt("quantity");
+            String qual = rs.getString("quality");
+            float rat = rs.getFloat("rating");
+            int relY = rs.getInt("releaseYear");
+            String pubS = rs.getString("publisherStudio");
+            String ill = rs.getString("illustrator");
+            System.out.printf("%-4s | %-30s | %-25s | %-25s | %-25s | %-8s | %-25s | %-6s | %-10s | %-26s | %-25s\n",id, title, IT, cre, gen, quan, qual, rat, relY, pubS, ill);
             	}
 	        connector.close();
       		}
@@ -354,7 +475,7 @@ public class NonBook
 			System.out.println("Database Error: "+e.getMessage());
 		}
 	}
-	public static void setQual(int newQual,  int ID)
+	public static void setQual(String newQual,  int ID)
 	{
 		try
 		{
@@ -362,7 +483,7 @@ public class NonBook
 			Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
 			String query = "update non_books set quality = ? where nonBookID = ?";
 			PreparedStatement prepSt = connector.prepareStatement(query);
-        		prepSt.setInt(1, newQual);
+        		prepSt.setString(1, newQual);
 			prepSt.setInt(2, ID);
 			prepSt.executeUpdate();
 			connector.close();
@@ -445,4 +566,3 @@ public class NonBook
 		}
 	}
 }
-

@@ -805,17 +805,130 @@ public class LibraryApp {
                 JPanel roomsPanel = new JPanel();
 
                 // Add buttons for each room
-                for (int i = 1; i <= 4; i++) {
-                    JButton btnRoom = new JButton("Room " + i);
-                    btnRoom.addActionListener(new ActionListener() {
-                        public void actionPerformed(ActionEvent e) {
-                            // Add your code for showing the room
-                            JOptionPane.showMessageDialog(frame, btnRoom.getText() + " clicked.");
-                        }
-                    });
-                    roomsPanel.add(btnRoom);
-                }
+                
+             JButton room1Button = new JButton("Room 1");
+           JButton room2Button = new JButton("Room 2");
+            JButton room3Button = new JButton("Room 3");
+            JButton room4Button = new JButton("Room 4");
+            JLabel room1Label = new JLabel();
+            JLabel room2Label = new JLabel();
+            JLabel room3Label = new JLabel();
+            JLabel room4Label = new JLabel();
 
+            roomsPanel.add(room1Button);
+            roomsPanel.add(room1Label);
+            roomsPanel.add(room2Button);
+           
+            roomsPanel.add(room3Button);
+            roomsPanel.add(room3Label);
+            roomsPanel.add(room4Button);
+            roomsPanel.add(room4Label);
+		room1Button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    try {
+                String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+                Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+                String query = "SELECT * FROM room_bookings WHERE roomNumber = 101;";
+                PreparedStatement prepSt = connector.prepareStatement(query);
+                ResultSet rs = prepSt.executeQuery();
+
+               int av = 0;
+		while(rs.next())
+		{
+			av = rs.getInt("available");
+		        if (av == 1) {
+		            room2Label.setText("Room 1 is not available");
+		        } else {
+		            room2Label.setText("Room 1 is available");
+		        }
+		}
+                connector.close();
+            } catch(SQLException e) {
+                System.out.println("Database error" + e.getMessage());
+            }
+            }
+            });
+            	room2Button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    try {
+                String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+                Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+                String query = "SELECT * FROM room_bookings WHERE roomNumber = 102;";
+                PreparedStatement prepSt = connector.prepareStatement(query);
+                ResultSet rs = prepSt.executeQuery();
+                //rs.next();
+		int av = 0;
+		while(rs.next())
+		{
+			av = rs.getInt("available");
+		        if (av == 1) {
+		            room2Label.setText("Room 2 is not available");
+		        } else {
+		            room2Label.setText("Room 2 is available");
+		        }
+		}
+                connector.close();
+            } catch(SQLException e) {
+                System.out.println("Database error" + e.getMessage());
+            }
+            }
+                
+            });
+            	room3Button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                     try {
+                String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+                Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+                String query = "SELECT * FROM room_bookings WHERE roomNumber = 103;";
+                PreparedStatement prepSt = connector.prepareStatement(query);
+                ResultSet rs = prepSt.executeQuery();
+		int av = 0;
+		while(rs.next())
+		{
+			av = rs.getInt("available");
+		        if (av == 1) {
+		            room2Label.setText("Room 3 is not available");
+		        } else {
+		            room2Label.setText("Room 3 is available");
+		        }
+		}
+                connector.close();
+            } catch(SQLException e) {
+                System.out.println("Database error" + e.getMessage());
+            }
+            }
+                
+            });
+            	room4Button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    try {
+                String url = "jdbc:mysql://54.84.79.252:3306/sql5664279";
+                Connection connector = DriverManager.getConnection(url,"sql5664279","BD4wVguFkr");
+                String query = "SELECT * FROM room_bookings WHERE roomNumber = 104;";
+                PreparedStatement prepSt = connector.prepareStatement(query);
+                ResultSet rs = prepSt.executeQuery();
+
+               int av = 0;
+		while(rs.next())
+		{
+			av = rs.getInt("available");
+		        if (av == 1) {
+		            room2Label.setText("Room 4 is not available");
+		        } else {
+		            room2Label.setText("Room 4 is available");
+		            
+		        }
+		}
+                connector.close();
+            } catch(SQLException e) {
+                System.out.println("Database error" + e.getMessage());
+            }
+            }    
+            });	
                 JButton btnReturn = new JButton("Return");
                 btnReturn.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
@@ -831,7 +944,7 @@ public class LibraryApp {
                     }
                 });
                 roomsPanel.add(btnReturn);
-
+ 		roomsPanel.add(room2Label);
                 // Replace the current panel with the new one
                 frame.getContentPane().removeAll();
                 frame.getContentPane().add(roomsPanel, BorderLayout.CENTER);
@@ -839,8 +952,10 @@ public class LibraryApp {
                 frame.repaint();
             }
         });
-        panel.add(btnRooms);
-
+      panel.add(btnBooks);
+        panel.add(btnNonBookItems);
+	panel.add(btnRooms);
+	//panel.add(btnReturn);
         frame.revalidate();
         frame.repaint();
     }
